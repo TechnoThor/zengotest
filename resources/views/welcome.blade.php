@@ -12,7 +12,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
-                <counties v-on:fetchcountry="fetchcountry" :countries="countries"></counties>
+                <counties @fetch-cities="fetchCities"  @fetch-counties="fetchCounty" :counties="counties" @showinput="showInput"></counties>
+                <cityform @add-city="addCity" @fetch-cities="fetchCities" :showinput="showinput" :county="county" :message="message"></cityform>
+            </div>
+            <div class="col-md-7">
+                <cities @fetch-cities="fetchCities" @delete-city="deleteCity" :cities="cities" :county="county"></cities>
             </div>
         </div>
     </div>

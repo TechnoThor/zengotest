@@ -1,43 +1,44 @@
 <template>
-    <form @submit="formSubmit">
         <div class="form-group">
-            <label for="exampleFormControlSelect">Countries</label>
-            <select class="form-control" id="exampleFormControlSelect">
-                <option>1</option>
-                <option>2</option>
+            <label for="exampleFormControlSelect">Counties</label>
+            <select v-model="choosed" @change="show(choosed),fetchCities(choosed)" class="form-control"  id="exampleFormControlSelect">
+                <option :value="0">Válasszon</option>
+                <option v-for="(county, index) in this.counties" :value="county.id">
+                    {{ county.name }}
+                </option>
             </select>
         </div>
-    </form>
 </template>
 
 <script>
     export default {
-        props: ['userid','userid2'],
+        props: ['counties'],
 
-        data() {
+        data: function () {
             return {
-
+                choosed:'0',
             }
         },
-
-        methods: {
-            formSubmit(e) {
-                e.preventDefault();
-                if ($('#btn-input').val()!="" || this.image!=''){
-                    this.$emit('messagesent', {
-                        userid: this.userid,
-                        userid2: this.userid2,
-                        message: this.newMessage,
-                        image: this.image,
+        created() {
+            this.fetchCounty();
+        },
+        methods:{
+            fetchCounty: function () {
+                this.$emit('fetch-counties');
+            },
+            fetchCities: function (countyId) {
+                    this.$emit('fetch-cities', {
+                        countyId: countyId,
                     });
-                    this.newMessage = '';
-                    this.image = '';
-                    this.success = '';
-                }
+            },
+            show: function (number) {
 
-
-            }
+                    this.$emit('showinput', {
+                        number: number,
+                    });
+            },
 
         }
+
     }
 </script>
