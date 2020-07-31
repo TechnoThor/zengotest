@@ -4,19 +4,19 @@
 @stop
 
 @section('links')
-
+<link rel="stylesheet" href="/css/style.css">
 @stop
 
 @section('content')
 <div id='app'>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row canvas">
             <div class="col-md-5">
-                <counties @fetch-cities="fetchCities"  @fetch-counties="fetchCounty" :counties="counties" @showinput="showInput"></counties>
-                <cityform @add-city="addCity" @fetch-cities="fetchCities" :showinput="showinput" :county="county" :message="message"></cityform>
+                <counties @render-cities="renderCities" @get-cities-select="getCitiesSelect" :cities="{{$cities}}" :counties="{{$counties}}"  @showinput="showInput"></counties>
+                <city-form @add-city="addCity" @get-cities="getCities" :showinput="showinput" :message="message"></city-form>
             </div>
             <div class="col-md-7">
-                <cities @fetch-cities="fetchCities" @delete-city="deleteCity" :cities="cities" :county="county"></cities>
+                <cities @get-cities="getCities" :current-cities="currentCities" :current-county="currentCounty" @edit-city="editCity" @delete-city="deleteCity"></cities>
             </div>
         </div>
     </div>

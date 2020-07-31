@@ -1,18 +1,23 @@
 <template>
-        <div class="form-group">
-            <label for="exampleFormControlSelect">Counties</label>
-            <select v-model="choosed" @change="show(choosed),fetchCities(choosed)" class="form-control"  id="exampleFormControlSelect">
-                <option :value="0">Válasszon</option>
-                <option v-for="(county, index) in this.counties" :value="county.id">
-                    {{ county.name }}
-                </option>
-            </select>
+    <div class="row border-1 p-4">
+        <div class="col-12">
+            <div class="form-group d-inline-flex mb-0 w-100">
+                <label for="FormControlSelect" class="mt-auto mb-auto mr-2 uppercase">Megye:</label>
+                <select v-model="choosed" @change="show(choosed)" class="form-control p-1 h-auto uppercase bg-dark text-white ml-auto mr-0 w-75"  id="FormControlSelect">
+                    <option :value="0">Válasszon</option>
+                    <option  v-for="(county, index) in counties" :value="county.id">
+                        {{ county.name }}
+                    </option>
+                </select>
+            </div>
         </div>
+    </div>
+
 </template>
 
 <script>
     export default {
-        props: ['counties'],
+        props: ['counties','cities'],
 
         data: function () {
             return {
@@ -20,22 +25,34 @@
             }
         },
         created() {
-            this.fetchCounty();
+            this.renderCities(this.cities)
         },
         methods:{
-            fetchCounty: function () {
-                this.$emit('fetch-counties');
+            renderCities: function (cities) {
+                this.$emit('render-cities', {
+                    startcities: cities,
+                });
             },
-            fetchCities: function (countyId) {
-                    this.$emit('fetch-cities', {
-                        countyId: countyId,
-                    });
-            },
-            show: function (number) {
 
-                    this.$emit('showinput', {
-                        number: number,
-                    });
+            show: function (currentId) {
+                this.$emit('showinput', {
+                    currentId: currentId,
+                });
+
+                var countyObj={};
+                this.counties.forEach(function(county) {
+                    if(county.id===currentId){
+                        countyObj = {
+                            "id": parseInt(county.id),
+                            "name": county.name,
+                        };
+                    }
+                });
+
+                this.$emit('get-cities-select', {
+                    county: countyObj,
+
+                });
             },
 
         }

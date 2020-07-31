@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/fetchcounties', 'HomeController@fetchCounties');
-Route::get('/fetchcities', 'HomeController@fetchCities');
-Route::post('/addcity', 'HomeController@addcity');
+Route::get('/', 'HomeController@index');
+Route::post('/addcity', 'HomeController@addCity');
+Route::post('/editcity', 'HomeController@editCity');
 Route::post('/deletecity', 'HomeController@destroyCity');
-Route::get('/', function () {
-    return view('welcome');
-});
+

@@ -1,0 +1,34 @@
+.canvas{
+    max-width: 70rem;
+    margin: auto;
+    margin-top: 8%;
+}
+.cities-table{
+    max-height: 50vh;
+    overflow: auto;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+
+.bg-dark{
+    background-color: gray;
+}
+.border-1{
+    border: 1px solid gray;
+}
+.alert{
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    text-align: center;
+}
+.row + .row
+{
+    border-top: none;
+}
+
+.text-light{
+    color: #999797!important;
+}

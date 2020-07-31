@@ -8,39 +8,41 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function fetchCounties(){
+    public function index(){
         $data=[
-            'counties'=>County::all()
+            "counties"=>County::all(),
+            "cities"=>City::all(),
         ];
-        return $data;
-    }
-
-    public function fetchCities(Request $request){
-        $cities=[];
-        $county=County::find($request->countyid);
-        if(!empty($county)){
-            $cities=$county->cities()->get();
-        }
-        $data=[
-            'cities'=>$cities,
-            'county'=>!(empty($county))?$county:[],
-        ];
-        return $data;
+        return view("welcome")->with($data);
     }
 
     public function addCity(Request $request){
-        if($request->city!='' && intval($request->countyId)!=0){
+        if($request->name!='' && intval($request->countyId)!=0){
             try {
-                City::create([
-                    'name'=>$request->city,
+                $city=City::create([
+                    'name'=>$request->name,
                     'county_id'=>intval($request->countyId)
                 ]);
-                return ['alert'=>'Sikeres tárolás'];
+                return ['alert'=>'Sikeres tárolás','id'=>$city->id];
             } catch (Exception $e) {
                 return ['alert'=>$e->getMessage()];
             }
         }else{
-            return ['alert'=>'Kötelező megadni a nevet valamint a kategóriát!'];
+            return ['alert'=>'Kötelező megadni a város nevét, valamint a kategóriát!'];
+        }
+    }
+    public function editCity(Request $request){
+        if($request->name!='' && intval($request->id)!=0){
+            try {
+                City::find(intval($request->id))->update([
+                    'name'=>$request->name,
+                ]);
+                return ['alert'=>'Sikeres mentés'];
+            } catch (Exception $e) {
+                return ['alert'=>$e->getMessage()];
+            }
+        }else{
+            return ['alert'=>'Sikertelen tárolás, a név mezőt közelező megadni!'];
         }
     }
     public function destroyCity(Request $request){
