@@ -9,7 +9,7 @@ composer update<br />
 php artisan key:generate<br />
 php artisan optimize:clear<br />
 php artisan migrate<br />
-npm run install<br />
+npm install<br />
 npm run dev<br />
 php artisan serve<br />
 ####After that you can reach the UI in your browser with 'localhost:8000'
